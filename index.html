@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>cooltext</title>
+
+    <style>
+      #newSring {
+        --delay: 0s;
+      }
+
+      .transform {
+        animation-name: transform-kf;
+        animation-duration: 1s;
+        animation-iteration-count: 1;
+        animation-timing-function: cubic-bezier(0.54, 0.21, 0.63, 1.66);
+        animation-fill-mode: both;
+        animation-delay: calc(var(--delay) * 0.05s);
+      }
+
+      #newString span {
+        opacity: 0;
+        display: inline-block;
+        font-size: 4rem;
+      }
+
+      @keyframes transform-kf {
+        from {
+          transform: translateY(10vw);
+        }
+
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <section>
+      <h1 id="cooltext">this &nbsp; text &nbsp; should &nbsp; fade &nbsp; from &nbsp; the &nbsp; bottom</h1>
+
+      <div id="newString"></div>
+    </section>
+
+    <script>
+      "use strict";
+      window.addEventListener("DOMContentLoaded", init);
+
+      let type = document.querySelector("#cooltext").textContent;
+      let typeArr = type.split("");
+      let n = "0";
+      console.log(typeArr.length);
+
+      function init() {
+        //clear text
+        document.querySelector("#cooltext").textContent = null;
+
+        createType();
+        delayAnimations();
+      }
+
+      function createType() {
+        n++;
+        typeArr.forEach((letter) => {
+          console.log(`${letter}`);
+          let spanElement = document.createElement("span");
+          let currentLetter = document.createTextNode(letter);
+          spanElement.appendChild(currentLetter);
+          spanElement.classList.add("transform");
+          document.getElementById("newString").appendChild(spanElement);
+          console.log(spanElement);
+        });
+      }
+
+      function delayAnimations() {
+        for (let i = 0; i < typeArr.length; i++) {
+          let text = document.querySelectorAll(".transform");
+          text[i].style.setProperty("--delay", i);
+          console.log(text[i]);
+        }
+      }
+    </script>
+  </body>
+</html>
